@@ -1,8 +1,7 @@
-const handlePromise = require("../helpers/promise_helper");
 const mongoose = require('mongoose');
-const handlePromise = require("../helpers/promise.helper");
+const handlePromise = require("../helpers/promise_helper");
 const Contact = require('../models/contact.model');
-
+const {BadRequestError} = require("../errors");
 
 exports.create = async function(req,res,next){
     if(!req.body.name){
@@ -36,7 +35,7 @@ exports.findAll = async function(req,res,next){
         return next (new BadRequestError(500,"An error occurred while creating the contact"))
     }
 
-    return res.send(documents);
+    return res.send(document);
 }
 exports.findAllFavorite = async function(req,res,next){
     const [error,documents] = await handlePromise(Contact.find({favorite:true,}))
@@ -70,17 +69,18 @@ exports.update = async function(req,res,next){
         _id:id&&mongoose.isValidObjectId(id)?id:null,
     }
     const [error,document] = await handlePromise(
-        Contact.findOneandUpdate(condition,req.body,{
+        Contact.findOneAndUpdate(condition,req.body,{
             new:true,
         })
     );
   
     if (error){
-        return next (new BadRequestError(500,`Error updating contact with id=${req.params.id}`));
-    }
+        return next (new BadRequestError(500,
+            `Error updating contact with id=${req.params.id}`));
+    };
     if (!document){
         return next(new BadRequestError(404,"Contact not found"));
-    }
+    };
     return res.send({message:"Contact was update successfully"});
 }
 exports.delete = async function(req,res,next){

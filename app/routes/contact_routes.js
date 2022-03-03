@@ -8,7 +8,7 @@ module.exports = app=>{
 
     router.get('/',contacts.findAll);
 
-    router.get('/favorite',contacts.findAllFavourite);
+    router.get('/favorite',contacts.findAllFavorite);
 
     router.get('/:id',contacts.findOne);
 

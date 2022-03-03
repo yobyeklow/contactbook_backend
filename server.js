@@ -6,7 +6,7 @@ mongoose.connect(config.database.uri)
     .then(()=>{
         console.log("Connected to the database!");
     })
-    .catch((err)=>{
+    .catch((error)=>{
         console.log("Cannot connect to the database!", error);
         process.exit();
     })

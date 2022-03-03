@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
-
-const schema = mongoose.schema(
+const mongoose = require("mongoose");
+const schema = mongoose.Schema(
     {
         name:{
             type:String,
@@ -13,7 +12,7 @@ const schema = mongoose.schema(
         },
         address:String,
         phone:String,
-        favourite:Boolean,
+        favorite:Boolean,
     },
     {
         timestamp:true
@@ -22,7 +21,7 @@ const schema = mongoose.schema(
 
 schema.method("toJSON", function(){
     const {__v,_id, ...object} = this.toObject();
-    object.id = id;
+    object.id =_id;
     return object;
 });
 
